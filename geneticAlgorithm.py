@@ -59,8 +59,8 @@ class Population:
         mute_y = True if round(random.uniform(1, 20)) == 1 else False
         
         return Individual(
-            idv.x + random.uniform(-1, 1) if mute_x else idv.x,
-            idv.y + random.uniform(-1, 1) if mute_y else idv.y,)
+            idv.x + random.uniform(-10, 10) if mute_x else idv.x,
+            idv.y + random.uniform(-10, 10) if mute_y else idv.y,)
         
     def select_with_rep(self):
         """
@@ -155,6 +155,7 @@ class Population:
             if (round(self.get_best().fitness) == round(self.GLOBAL_MIN)):
                 return i
             
+
             q_pop = []
             for pa, pb in self.select_with_rep():
                 child_a, child_b = self.cross_over(pa, pb)
@@ -170,7 +171,7 @@ class Population:
         return i
 
 if __name__ == "__main__":
-    pop = Population(5000, 20)
+    pop = Population(200000, 20)
 
     #pop.assess_fitness()
 
