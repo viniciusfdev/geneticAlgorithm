@@ -1,5 +1,6 @@
 import random
 import math
+import time
 
 class Individual:
     def __init__(self, x, y):
@@ -61,10 +62,52 @@ class Population:
             idv.x + random.uniform(-1, 1) if mute_x else idv.x,
             idv.y + random.uniform(-1, 1) if mute_y else idv.y,)
         
+    def select_with_rep(self):
+        """
+            seleção por ranking linear
+        """
+        MIN = 0
+        MAX = 100
+        sorted_c = self.sort_by_fitness()
+        
+        ps = []
+        for i, idv in enumerate(sorted_c):
+            ps.append(MIN + (MAX - MIN) * (len(sorted_c)-i)/(len(sorted_c)-1))
+
+        ss = []
+        for i, idv in enumerate(sorted_c):
+            if i == 0:
+                ss.append(ps[i])
+            else:
+                ss.append(ss[i-1] + ps[i])
+
+        for i in range(round(len(sorted_c)/2)):
+            rand_a = random.uniform(0, len(ss))
+            rand_b = random.uniform(0, len(ss))
+            pos_a = 0
+            pos_b = 0
+            
+            for pos in range(len(ss)):
+                if pos == 0:
+                    if rand_a < ss[pos]:
+                        pos_a = pos
+                        break
+
+                if rand_a <= ss[pos-1] and rand_a < ss[pos]:
+                    pos_a = pos
+                    break
+
+                if rand_b <= ss[pos-1] and rand_b < ss[pos]:
+                    pos_b = pos
+                    break
+
+            yield sorted_c[pos_a], sorted_c[pos_b]
+
     def select_by_class(self):
         """
-            Seleção por classificação, a seleção randomica é feita sob
-            30% dos melhores
+            Seleção por elitismo, a seleção randomica é feita sob
+            30% dos melhores (nao é utilizada na pratica, foi feita a 
+            titulo de curiosidade e testes)
         """
         sorted_c = self.sort_by_fitness()[:round(0.30*len(self.population))]
     
@@ -113,7 +156,7 @@ class Population:
                 return i
             
             q_pop = []
-            for pa, pb in self.select_by_class():
+            for pa, pb in self.select_with_rep():
                 child_a, child_b = self.cross_over(pa, pb)
                 q_pop.append(self.mutate(child_a))
                 q_pop.append(self.mutate(child_b))
@@ -127,12 +170,13 @@ class Population:
         return i
 
 if __name__ == "__main__":
-    pop = Population(1000, 100)
+    pop = Population(5000, 20)
 
     #pop.assess_fitness()
 
     #print(pop.population)
-
+    init_time = time.time()
     n = pop.run()
     print(pop.population)
+    print("Execution time: {}".format(time.time() - init_time))
     print("Number of iterations: {}".format(n))
