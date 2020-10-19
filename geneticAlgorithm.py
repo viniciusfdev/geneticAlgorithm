@@ -70,17 +70,19 @@ class Population:
         MAX = 100
         sorted_c = self.sort_by_fitness()
         
-        ps = []
+        
+        ps = [] # probabilidade de seleção
         for i, idv in enumerate(sorted_c):
             ps.append(MIN + (MAX - MIN) * (len(sorted_c)-i)/(len(sorted_c)-1))
 
-        ss = []
+        ss = [] # probabilidade de seleção acumulada
         for i, idv in enumerate(sorted_c):
             if i == 0:
                 ss.append(ps[i])
             else:
                 ss.append(ss[i-1] + ps[i])
 
+        # selecao por ranking linear
         for i in range(round(len(sorted_c)/2)):
             rand_a = random.uniform(0, len(ss))
             rand_b = random.uniform(0, len(ss))
@@ -171,11 +173,7 @@ class Population:
         return i
 
 if __name__ == "__main__":
-    pop = Population(200000, 20)
-
-    #pop.assess_fitness()
-
-    #print(pop.population)
+    pop = Population(200000, 5)
     init_time = time.time()
     n = pop.run()
     print(pop.population)
