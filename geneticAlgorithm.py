@@ -89,6 +89,9 @@ class Population:
             pos_a = 0
             pos_b = 0
             
+            # procura na roleta as duas posicoes dos pais sorteados
+            # considerando os pesos(da selecao acumulada) ss calculado
+            # anteriormente
             for pos in range(len(ss)):
                 if pos == 0:
                     if rand_a < ss[pos]:
