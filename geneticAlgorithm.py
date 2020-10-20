@@ -84,6 +84,7 @@ class Population:
 
         # selecao por ranking linear
         for i in range(round(len(sorted_c)/2)):
+            # TODO: mudar para random.uniform(ss[0], ss[len(ss)-1])
             rand_a = random.uniform(0, len(ss))
             rand_b = random.uniform(0, len(ss))
             pos_a = 0
