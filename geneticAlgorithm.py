@@ -80,8 +80,8 @@ class Population:
         mute_y = True if round(random.uniform(1, 20)) == 1 else False
         
         return Individual(
-            idv.x + random.uniform(-10, 10) if mute_x else idv.x,
-            idv.y + random.uniform(-10, 10) if mute_y else idv.y,)
+            idv.x + random.uniform(-1, 1) if mute_x else idv.x,
+            idv.y + random.uniform(-1, 1) if mute_y else idv.y,)
         
     def select_with_rep(self):
         """
