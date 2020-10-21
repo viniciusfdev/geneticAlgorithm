@@ -6,7 +6,8 @@ import time
 
 """
 # Vinícius França Lima Vilaça
-
+# EXECUTAR NA NUVEM SE FOR MAIS CONVENIENTE:
+    # https://colab.research.google.com/drive/1MiUAXihlqnFGde41HTInHs3fZu5SGuRQ?usp=sharing
 # Exige a instalação das bibliotecas matplotlib e numpy para o plot
 # pip install matplotlib
 # pip install numpy
